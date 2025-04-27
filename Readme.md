@@ -1,11 +1,3 @@
-const express=require("express");
-const {connectionDB} = require("./config/database.js");
-const User=require("./models/user.js");
-const app=express();
-
-app.use(express.json());
-
-
 app.post("/signup", async(req,res)=>{
     // Here we create the instance of the model it means we can create a new user to add it to database
     const user= new User(req.body);
@@ -63,25 +55,3 @@ app.patch("/user",async(req,res)=>{
         res.status(404).send("something went wrong in userId");
     }
 })
-
-
-
-
-
-
-
-connectionDB()
-.then(()=>{
-    console.log("database connection establised");
-    app.listen(3000,()=>{
-        console.log("server is listening successfully");
-    });
-    
-    })
-    .catch((err)=>{
-        console.log("cannot connect db")
-});
-
- 
-
-
