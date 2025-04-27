@@ -1,22 +1,22 @@
 const express=require("express");
 const app=express();
-const {adminAuth,userAuth}=require("./middlewares/auth.js")
-
-app.use("/admin",adminAuth);
 
 
 
-app.get("/user",userAuth,(req,res)=>{
-    res.send("user is repsonded")
+
+app.get("/getUserData",(req,res)=>{
+    // try{
+        throw new Error("ndajfakjf");
+        res.send("user data sent");
+    // }catch(err){
+    //     res.status(500).send("something went wring");
+    // }
 })
-app.get("/admin/dataUser",(req,res)=>{
-    res.send("data si secure")
-    console.log("data is secure in db");
-})
 
-app.get("/admin/profile",(req,res)=>{
-    res.send("profiled")
-    console.log("profileis updated");
+app.use("/",(err,req,res,next)=>{
+    if(err){
+        res.status(500).send("please it is technical issue...contact your team");
+    }
 })
 
 
