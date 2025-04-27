@@ -1,22 +1,25 @@
 const express=require("express");
-
 const app=express();
 
+app.get("/user",(req,res)=>{
+    res.send("this is the get call from the db");
+})
 
-app.use("/hello",(req,res)=>{
-    res.send("this is hello hello!");
-});
+app.post("/user",(req,res)=>{
+    res.send("it is the post call which is the user data will be stored in the db");
+})
+
+app.put("/user",(req,res)=>{
+    res.send("this call will changes in the db");
+})
+
+app.delete("/user",(req,res)=>{
+    res.send("this is call will be delete in the db");
+})
 
 
-app.use("/test",(req,res)=>{
-    res.send("it is testing route");
-});
-
-app.use((req,res)=>{
-    res.send("heloo we are created first server using express");
-});
+ app.listen(3000,()=>{
+    console.log("server is listening successfully");
+})
 
 
-app.listen(3000,()=>{
-    console.log("server is listening successfully in port 3000");
-});
