@@ -20,25 +20,6 @@ app.post("/signup", async(req,res)=>{
    
 });
 
-// app.get("/user",async(req,res)=>{
-//     const userEmail=req.body.email
-//     try{
-//         const users=await User.find({email:userEmail});
-//         res.send(users)
-//     }catch(err){
-//         res.status(404).send("usernot found");
-//     }
-// })
-
-// app.get("/feed",async(req,res)=>{
-//     try{
-//         const users=await User.find({});
-//     res.send(users);
-//     }catch(err){
-//         res.status(404).send("something went wrong");
-//     }
-    
-// })
 
 app.get("/user",async(req,res)=>{
     const userEmail=req.body.email;
@@ -49,6 +30,7 @@ app.get("/user",async(req,res)=>{
         res.status(404).send("user nor found")
     }
 })
+
 app.get("/feed",async(req,res)=>{
     try{
         const users =await User.find({})
@@ -58,6 +40,23 @@ app.get("/feed",async(req,res)=>{
     }
     
 })
+
+app.delete("/user",async(req,res)=>{
+    const userId=req.body.userId;
+    try{
+    const user=await User.findByIdAndDelete(userId);
+    res.send("user delete successfully");
+    }catch(err){
+        res.status(404).send("here the id doesnot shown")
+    }
+
+}
+)
+
+
+
+
+
 
 
 connectionDB()
