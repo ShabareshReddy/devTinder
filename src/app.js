@@ -57,10 +57,18 @@ app.patch("/user",async(req,res)=>{
     const userId=req.body.userId;
     const data=req.body;
     try{
+        const ALLOWED_UPDATES=["userId","about","age","skills"];
+        const isUpdateAllowed=Object.keys(data).every((k)=>ALLOWED_UPDATES.includes(k))
+        if(!isUpdateAllowed){
+            throw new Error("User can`t update");
+        }
+        if(data.skills.length>10){
+            throw new Error("only 10 skills")
+        }
         const user=await User.findByIdAndUpdate(userId,data);
         res.send("user sucessfully updates");
     }catch(err){
-        res.status(404).send("something went wrong in userId");
+        res.status(404).send(err.message);
     }
 })
 
