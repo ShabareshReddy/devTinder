@@ -6,6 +6,7 @@ const bcrypt=require("bcrypt");
 const app=express();
 const cookieParser=require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const {userAuth}=require("./middlewares/auth.js");
 // const { isJWT } = require("validator");
 
 app.use(express.json());
@@ -71,53 +72,20 @@ try{
 }
 })
 
-app.get("/profile",async(req,res)=>{
+app.get("/profile",userAuth,async(req,res)=>{
     try{
-    const cookie=req.cookies;
-    const {token}=cookie;
-    if(!token){
-    throw new Error("invalid Token")
-    }
-    const decodedMessage=await jwt.verify(token,"NamasteDev@90");
-    const {_id}=decodedMessage;
-    const user=await User.findById(_id);
-    res.send(user);
+   const user=req.user;
+   res.send(user);
 }catch(err){
     res.status(400).send(err.message);
 }
 })
 
-app.get("/user",async(req,res)=>{
-    const userEmail=req.body.email;
-    try{
-        const users=await User.find({email:userEmail})
-        res.send(users);
-    }catch(err){
-        res.status(404).send("user nor found")
-    }
+app.post("/sentRequest",userAuth,(req,res)=>{
+   const user=req.user;
+    res.send(user.firstName +"will sent connection request");
 })
 
-app.get("/feed",async(req,res)=>{
-    try{
-        const users =await User.find({})
-    res.send(users)
-    }catch(err){
-        res.status(404).send("sww");
-    }
-    
-})
-
-app.delete("/user",async(req,res)=>{
-    const userId=req.body.userId;
-    try{
-    const user=await User.findByIdAndDelete(userId);
-    res.send("user delete successfully");
-    }catch(err){
-        res.status(404).send("here the id doesnot shown")
-    }
-
-}
-)
 
 app.patch("/user",async(req,res)=>{
     const userId=req.body.userId;
