@@ -1,6 +1,5 @@
 const express=require("express");
 const {connectionDB} = require("./config/database.js");
-
 const app=express();
 // const { isJWT } = require("validator");
 const cookieParser=require("cookie-parser");

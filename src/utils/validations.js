@@ -12,4 +12,16 @@ const validateSignUpData=(req)=>{
         throw new Error("invalid password")
     }
 }
-module.exports={validateSignUpData};
+
+
+const validateEditProfileData=(req)=>{
+    const ALLOWED_UPDATES=["age","gender","skills","about"];
+    const isUpdateAllowed=Object.keys(req.body).every((field)=>
+        ALLOWED_UPDATES.includes(field)
+);
+    return isUpdateAllowed;
+}
+
+
+
+module.exports={validateSignUpData,validateEditProfileData};
